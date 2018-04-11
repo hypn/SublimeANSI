@@ -371,6 +371,9 @@ class AnsiColorBuildCommand(Default.exec.ExecCommand):
         unsupported_pattern = r'\x1b\[(0;)?[24578]m'
         str_data = re.sub(unsupported_pattern, "\x1b[1m", str_data)
 
+        # replace unsupported ansi escape codes before going forward: 00;
+        str_data = str_data.replace("[00;", "[")
+
         # find all regions
         ansi_regions = []
         for ansi in ansi_definitions(str_data):
